@@ -27,9 +27,15 @@
 	<div id="glitch-lines" class="glitch-filter"></div>
 	<!-- <div id="glitch-shadow" class="glitch-filter"></div> -->
 
-	<h2 class="glitch-text">Presented by THOTH</h2>
+	<h2 class="glitch-text" id="glitch-by">Presented by THOTH</h2>
 	<h1 class="glitch-text">The Glitch</h1>
 	<button class="glitch-text" on:click={toggleBinaryDate}>{dateString}</button>
+</div>
+
+<div id="description">
+	<div>
+		Lorem ipsum dolor sit amet consectetur adipisi cing elit. Ipsum delectus non laborum iusto praesentium dolores cumque. Ratione quibusdam culpa laboriosam aspernatur repudiandae minus, explicabo neque voluptate. Harum ipsum corrupti saepe!
+	</div>
 </div>
 
 <style>
@@ -62,8 +68,13 @@
 		gap: 0.5rem;
 		position: relative;
 		z-index: 2;
+		margin-bottom: 1.5rem;
 		/* background-color: rgb(var(--darker-rgb)); */
 		/* backdrop-filter: blur(1rem); */
+	}
+
+	#glitch-by {
+		margin-bottom: 0.5rem;
 	}
 
 	.glitch-text {
@@ -101,5 +112,11 @@
 		z-index: 5;
 		opacity: 0.75;
 		/* animation: pan-lines 360s infinite linear; */
+	}
+
+	#description {
+		color: #fbfbfb;
+		display: flex;
+		align-items: center;
 	}
 </style>

@@ -2,12 +2,15 @@
 	import { onMount } from 'svelte';
 
 	let canvas: HTMLCanvasElement;
-	let ctx: CanvasRenderingContext2D;
+	let canvas2: HTMLCanvasElement;
+	let ctx: CanvasRenderingContext2D | null;
+	let ctx2: CanvasRenderingContext2D | null;
 
 	onMount(() => {
 		ctx = canvas.getContext('2d');
+		ctx2 = canvas.getContext('2d');
 
-		if (ctx) {
+		if (ctx && ctx2) {
 			let width = window.innerWidth;
 			let height = window.innerHeight;
 			const backgroundColor = '#080d07'
@@ -15,6 +18,8 @@
 
 			canvas.width = width;
 			canvas.height = height;
+			canvas2.width = width;
+			canvas2.height = height;
 			ctx.fillStyle = backgroundColor;
 			ctx.fillRect(0, 0, width, height);
 
@@ -59,18 +64,27 @@
 
 			class Point {
 				private speed: number;
+				private value: string;
 
 				constructor(
 					public x: number,
 					public y: number
 				) {
 					this.speed = randFloat(2, 5);
+					this.value = charArr[randInt(0, charArr.length - 1)];
 				}
 
 				public draw(ctx: CanvasRenderingContext2D): void {
+					this.value = charArr[randInt(0, charArr.length - 1)];
+
+
+					ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+					ctx.font = fontSize + 'px san-serif';
+					ctx.fillText(this.value, this.x, this.y);
+
 					ctx.fillStyle = 'rgba(65, 255, 0, 0.8)';
 					ctx.font = fontSize + 'px san-serif';
-					ctx.fillText(charArr[randInt(0, charArr.length - 1)], this.x, this.y);
+					ctx.fillText(this.value, this.x, this.y);
 
 					this.y += this.speed;
 
@@ -88,19 +102,25 @@
 			}
 
 			const update = () => {
+				if (!ctx || !ctx2) return; // Null check
+				
 				ctx.fillStyle = 'rgba(0,0,0,0.05)';
 				ctx.fillRect(0, 0, width, height);
 
+				// ctx2.clearRect(0, 0, width, height);
+				
 				var i = fallingCharArr.length;
-
+				
 				while (i--) {
 					fallingCharArr[i].draw(ctx);
 					var v = fallingCharArr[i];
 				}
 				animationFrameId = requestAnimationFrame(update);
 			};
-
+			
 			const handleResize = () => {
+				if (!ctx || !ctx2) return; // Null check
+
 				if (animationFrameId) {
 					cancelAnimationFrame(animationFrameId);
 					animationFrameId = 0;
@@ -146,11 +166,13 @@
 </script>
 
 <canvas bind:this={canvas}></canvas>
+<canvas bind:this={canvas2}></canvas>
 
 <style>
 	canvas {
 		position: absolute;
 		top: 0;
 		left: 0;
+		z-index: -1;
 	}
 </style>
