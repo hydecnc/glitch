@@ -1,0 +1,11 @@
+:root {
+    --primary-color: 65 255 0;
+    --darker-rgb: 8 13 7;
+    --theme-rgb: var(--primary-color);
+}
+
+body {
+    /* background-color: rgb(var(--darker-rgb)); */
+    background-color: #090904;
+    color: white;
+}
