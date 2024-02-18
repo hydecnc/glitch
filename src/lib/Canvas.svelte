@@ -2,15 +2,12 @@
 	import { onMount } from 'svelte';
 
 	let canvas: HTMLCanvasElement;
-	let canvas2: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
-	let ctx2: CanvasRenderingContext2D | null;
 
 	onMount(() => {
 		ctx = canvas.getContext('2d');
-		ctx2 = canvas.getContext('2d');
 
-		if (ctx && ctx2) {
+		if (ctx) {
 			let width = window.innerWidth;
 			let height = window.innerHeight;
 			const backgroundColor = '#080d07'
@@ -18,8 +15,6 @@
 
 			canvas.width = width;
 			canvas.height = height;
-			canvas2.width = width;
-			canvas2.height = height;
 			ctx.fillStyle = backgroundColor;
 			ctx.fillRect(0, 0, width, height);
 
@@ -77,11 +72,6 @@
 				public draw(ctx: CanvasRenderingContext2D): void {
 					this.value = charArr[randInt(0, charArr.length - 1)];
 
-
-					ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-					ctx.font = fontSize + 'px san-serif';
-					ctx.fillText(this.value, this.x, this.y);
-
 					ctx.fillStyle = 'rgba(65, 255, 0, 0.8)';
 					ctx.font = fontSize + 'px san-serif';
 					ctx.fillText(this.value, this.x, this.y);
@@ -102,13 +92,11 @@
 			}
 
 			const update = () => {
-				if (!ctx || !ctx2) return; // Null check
+				if (!ctx) return; // Null check
 				
 				ctx.fillStyle = 'rgba(0,0,0,0.05)';
 				ctx.fillRect(0, 0, width, height);
 
-				// ctx2.clearRect(0, 0, width, height);
-				
 				var i = fallingCharArr.length;
 				
 				while (i--) {
@@ -119,7 +107,7 @@
 			};
 			
 			const handleResize = () => {
-				if (!ctx || !ctx2) return; // Null check
+				if (!ctx) return; // Null check
 
 				if (animationFrameId) {
 					cancelAnimationFrame(animationFrameId);
@@ -166,7 +154,6 @@
 </script>
 
 <canvas bind:this={canvas}></canvas>
-<canvas bind:this={canvas2}></canvas>
 
 <style>
 	canvas {
