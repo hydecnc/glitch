@@ -111,11 +111,10 @@
 		background-size: 100% 7px;
 		z-index: 5;
 		opacity: 0.75;
-		/* animation: pan-lines 360s infinite linear; */
+		animation: pan-lines 360s infinite linear;
 	}
 
 	#description {
-		color: #fbfbfb;
 		display: flex;
 		align-items: center;
 	}
