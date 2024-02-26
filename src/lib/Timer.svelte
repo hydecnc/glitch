@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
+	import { startTimer } from './store';
 
 	let totalSeconds = 300; // 5 minutes
 	let minutes = Math.floor(totalSeconds / 60);
@@ -16,24 +17,24 @@
 		}
 	};
 
-	// onMount(() => {
-	// 	timer = setInterval(tick, 1000);
-
-	// 	return () => {
-	// 		clearInterval(timer);
-	// 	};
-	// });
-
-	function startTimer() {
+	function startCountdown() {
 		timer = setInterval(tick, 1000);
 
 		return () => {
 			clearInterval(timer);
 		};
-	};
+	}
+
+	const unsubscribe = startTimer.subscribe((newValue) => {
+		console.log('New value', newValue);
+		if (newValue) {
+			startCountdown();
+		}
+	});
 
 	onDestroy(() => {
 		clearInterval(timer);
+		unsubscribe();
 	});
 </script>
 
@@ -42,11 +43,11 @@
 <style>
 	div {
 		font-size: 2em;
-        font-family: 'Courier New', Courier, monospace;
-        font-weight: bold;
+		font-family: 'Courier New', Courier, monospace;
+		font-weight: bold;
 		text-align: center;
-        position: absolute;
-        top: 20px;
-        right: 20px;
+		position: absolute;
+		top: 20px;
+		right: 20px;
 	}
 </style>

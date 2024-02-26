@@ -33,9 +33,9 @@
 </div>
 
 <div id="description">
-	<div>
+	<!-- <div>
 		Lorem ipsum dolor sit amet consectetur adipisi cing elit. Ipsum delectus non laborum iusto praesentium dolores cumque. Ratione quibusdam culpa laboriosam aspernatur repudiandae minus, explicabo neque voluptate. Harum ipsum corrupti saepe!
-	</div>
+	</div> -->
 </div>
 
 <style>
