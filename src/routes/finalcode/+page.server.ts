@@ -1,4 +1,5 @@
 import { db } from '$lib/store';
+import { redirect } from '@sveltejs/kit';
 import { collection, getDocs } from 'firebase/firestore';
 
 
@@ -10,7 +11,7 @@ querySnapshot.forEach((doc) => {
     // console.log(`${doc.id} => ${doc.data()}`, doc.data());
 });
 
-// console.log(querySnapshot);
+// console.log(ips);
 
 export const load = async (event) => {
     let requestIp: string = "";
@@ -21,6 +22,10 @@ export const load = async (event) => {
       }
     } catch (error) {
       console.log('Error: ', error);
+    }
+    if (ips.includes(requestIp)) {
+      console.log("You are not allowed to access this page.")
+      redirect(302, '/blank')
     }
 
     return { ip: requestIp, bannedIps: ips }

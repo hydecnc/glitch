@@ -7,11 +7,6 @@
 
 	export let data;
 	// console.log(data.bannedIps);
-	onMount(() => {
-		if (data.bannedIps.includes(data.ip)) {
-			goto('/blank');
-		}
-	});
 
 	ip.set(data.ip);
 </script>
