@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { db, ip, startTimer, timeOut } from './store';
+	import { db, ip, startTimer, timeOut } from '$lib/store';
 	import { goto } from '$app/navigation';
 	import { addDoc, collection } from 'firebase/firestore';
 
@@ -30,7 +30,12 @@
 			if (codeAttempt <= 0) {
 				finalCodeFail();
 			} else {
-				simulateTyping(`Wrong. You have ${codeAttempt} chances left.`);
+				if (codeAttempt == 1) {
+					simulateTyping(`Wrong. You have ${codeAttempt} chance left.`);
+				}
+				else {
+					simulateTyping(`Wrong. You have ${codeAttempt} chances left.`);
+				}
 			}
 		} else {
 			simulateTyping(`Command not recognized: ${input}`);
@@ -54,19 +59,20 @@
 
 	const finalCodeSuccess = () => {};
 	const finalCodeFail = async () => {
-		simulateTyping('Website shutting down in 3...2...1');
-		console.log(ip)
+		await simulateTyping('Website shutting down in 3...2...1');
+		console.log("Banned ip: ", cur_ip)
 		await addDoc(collection(db, 'ips'), {
 			ip: cur_ip
 		});
 		goto('/blank');
+		startTimer.set(false);
+		timeOut.set(false);
 	};
 	const track_ip = ip.subscribe((value) => {
 		cur_ip = value
 	})
 
 	const unsubscribe = timeOut.subscribe((newValue) => {
-		console.log('New value', newValue);
 		if (newValue) {
 			finalCodeFail();
 		}

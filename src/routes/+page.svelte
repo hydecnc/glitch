@@ -34,16 +34,14 @@
 
 <div id="description">
 	<div>
-		The THOTH database has been hacked by an anonymous group, called "". "" has to be stopped to
-		prevent the database, containing all problems the THOTH club has ever solved, being deleted. You
-		are been called to save the database from "" and save the THOTH database.
+		The THOTH database has been hacked by an anonymous group, called "the glitchers". The glitchers
+		has put the THOTH database, which contains all problems the THOTH club has ever solved, at a
+		risk of deletion. They have to be stopped. You have been called to save the database from the
+		glitchers and save the THOTH database.
 	</div>
-	<!-- <a href="register">
+	<a href="https://forms.gle/ZHzq1jdPbDvz4pyr5">
 		<button type="button" id="register">Click here to register</button>
-	</a> -->
-	<div>
-
-	</div>
+	</a>
 </div>
 
 <style>

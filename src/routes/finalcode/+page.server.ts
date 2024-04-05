@@ -1,33 +1,27 @@
-import { goto } from '$app/navigation';
-import { db, ip } from '$lib/store.js';
+import { db } from '$lib/store';
 import { collection, getDocs } from 'firebase/firestore';
+
 
 const ips: string[] = [];
 
 const querySnapshot = await getDocs(collection(db, 'ips'));
 querySnapshot.forEach((doc) => {
     ips.push(doc.data().ip);
-    console.log(`${doc.id} => ${doc.data()}`, doc.data());
+    // console.log(`${doc.id} => ${doc.data()}`, doc.data());
 });
 
-console.log(ips);
+// console.log(querySnapshot);
 
 export const load = async (event) => {
-    let requestIp;
-    
+    let requestIp: string = "";
     try {
       requestIp = event.getClientAddress(); // IP from Client Request
-      ip.set(requestIp)
-      ip.subscribe((value) => {
-        console.log('IP Address from Client Request: ', typeof(value));
-      })
-      
-      if (ips.includes(requestIp)) {
-        goto("/blank")
+      if (!requestIp) {
+        throw new Error("requestIp is null");
       }
     } catch (error) {
-      console.log('Error reading IP', error);
+      console.log('Error: ', error);
     }
 
-    return { clientAddress: requestIp }
+    return { ip: requestIp, bannedIps: ips }
 }
