@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { startTimer } from './store';
+	import { startTimer, timeOut } from './store';
 
-	let totalSeconds = 300; // 5 minutes
+	let totalSeconds = 10; // 5 minutes
 	let minutes = Math.floor(totalSeconds / 60);
 	let seconds = totalSeconds % 60;
 	let timer: number | undefined;
@@ -14,6 +14,7 @@
 
 		if (totalSeconds === 0) {
 			clearInterval(timer);
+			timeOut.set(true);
 		}
 	};
 

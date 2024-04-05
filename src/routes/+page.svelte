@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Canvas from "$lib/Canvas.svelte";
+	import Canvas from '$lib/Canvas.svelte';
 
-	const date = new Date('2024-05-28T12:00:00');
+	const date = new Date('2024-05-21T12:00:00');
 	let binary = true;
 	const year = date.getFullYear();
 	const month = date.getMonth();
@@ -33,9 +33,17 @@
 </div>
 
 <div id="description">
-	<!-- <div>
-		Lorem ipsum dolor sit amet consectetur adipisi cing elit. Ipsum delectus non laborum iusto praesentium dolores cumque. Ratione quibusdam culpa laboriosam aspernatur repudiandae minus, explicabo neque voluptate. Harum ipsum corrupti saepe!
-	</div> -->
+	<div>
+		The THOTH database has been hacked by an anonymous group, called "". "" has to be stopped to
+		prevent the database, containing all problems the THOTH club has ever solved, being deleted. You
+		are been called to save the database from "" and save the THOTH database.
+	</div>
+	<!-- <a href="register">
+		<button type="button" id="register">Click here to register</button>
+	</a> -->
+	<div>
+
+	</div>
 </div>
 
 <style>
@@ -117,5 +125,15 @@
 	#description {
 		display: flex;
 		align-items: center;
+		flex-direction: column;
+		gap: 1em;
+	}
+
+	#register {
+		color: #fbfbfb;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 1em;
+		padding: 1em;
+		background-color: rgb(var(--darker-rgb));
 	}
 </style>
