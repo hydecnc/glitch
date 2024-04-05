@@ -39,7 +39,7 @@
 		risk of deletion. They have to be stopped. You have been called to save the database from the
 		glitchers and save the THOTH database.
 	</div>
-	<a href="https://forms.gle/ZHzq1jdPbDvz4pyr5">
+	<a href="register">
 		<button type="button" id="register">Click here to register</button>
 	</a>
 </div>

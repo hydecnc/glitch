@@ -20,12 +20,12 @@ export const load = async (event) => {
       if (!requestIp) {
         throw new Error("requestIp is null");
       }
+      if (ips.includes(requestIp)) {
+        console.log("You are not allowed to access this page.")
+        redirect(302, '/blank')
+      }
     } catch (error) {
       console.log('Error: ', error);
-    }
-    if (ips.includes(requestIp)) {
-      console.log("You are not allowed to access this page.")
-      redirect(302, '/blank')
     }
 
     return { ip: requestIp, bannedIps: ips }
