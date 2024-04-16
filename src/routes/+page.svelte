@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Canvas from '$lib/Canvas.svelte';
 
-	const date = new Date('2024-05-21T12:00:00');
+	const date = new Date('2024-05-20T12:00:00');
 	let binary = true;
 	const year = date.getFullYear();
 	const month = date.getMonth();
@@ -32,16 +32,49 @@
 	<button class="glitch-text" on:click={toggleBinaryDate}>{dateString}</button>
 </div>
 
-<div id="description">
-	<div>
-		The THOTH database has been hacked by an anonymous group, called "the glitchers". The glitchers
-		has put the THOTH database, which contains all problems the THOTH club has ever solved, at a
-		risk of deletion. They have to be stopped. You have been called to save the database from the
-		glitchers and save the THOTH database.
-	</div>
-	<a href="register">
-		<button type="button" id="register">Click here to register</button>
+<div id="content">
+	<a href="https://forms.gle/N9hRDH8nnXHKsRfu6">
+		<button type="button" id="register">Click here to register!</button>
 	</a>
+	<div class="desc-text">
+		The THOTH database has been hacked by an unknown hacker group. They have put the THOTH database,
+		which contains all problems the THOTH club has ever solved, at a risk of deletion. They must be
+		stopped at all cost. Whoever solves the situtation most deligently will be awarded 
+		<strong>3000 pesos</strong>
+		by the THOTH club. You have been called to save the database from the glitchers and save the
+		THOTH database.
+		<br />
+		<br />
+		To save the THOTH database, you must solve each problems given in the stations and also find the
+		<strong>Final Code</strong> required to stop the glitchers.
+	</div>
+	<div class="desc-text">
+		<h2 id="station-title">Rules</h2>
+		<ul>
+			<li>Only ONE registration team must be submitted per team.</li>
+			<li>You can participate as an individual or in a team of maximum 3 people.</li>
+			<li>
+				Only ASFM high school students can participate, but you may have different grade levels in
+				one team.
+			</li>
+			<li>The registration will close on May 10th 11:59 p.m.</li>
+		</ul>
+	</div>
+	<div class="desc-block desc-text">
+		<div class="desc-text block-desc">
+			* No advanced mathematics will be required for the event. Any high school student can have
+			success in the event. The following topics may appear during the event:
+		</div>
+		<div>
+			<h2 id="station-title">Topics</h2>
+			<ol>
+				<li>Ascii, Binary, Hex</li>
+				<li>Basic Operations (+, −, ×, ÷)</li>
+				<li>Advanced Operations (exponents, logarithms, √, !)</li>
+				<li>Spatial Perception</li>
+			</ol>
+		</div>
+	</div>
 </div>
 
 <style>
@@ -120,18 +153,43 @@
 		animation: pan-lines 360s infinite linear;
 	}
 
-	#description {
+	#content {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		gap: 1em;
 	}
 
+	.desc-block {
+		display: flex;
+	}
+
+	.block-desc {
+		max-width: 40%;
+	}
+
+	.desc-text {
+		padding: 1rem;
+		font-family: 'Courier New', Courier, monospace;
+		backdrop-filter: blur(10px);
+		/* padding: 5px; */
+		border-radius: 20px;
+		font-size: 1.1em;
+	}
+
+	#station-title {
+		font-size: 3rem;
+		padding: 0;
+		margin: 0;
+	}
+
 	#register {
 		color: #fbfbfb;
 		font-family: 'Courier New', Courier, monospace;
-		font-size: 1em;
+		font-size: 1.5em;
 		padding: 1em;
-		background-color: rgb(var(--darker-rgb));
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		/* background-color: rgb(var(--darker-rgb)); */
 	}
 </style>

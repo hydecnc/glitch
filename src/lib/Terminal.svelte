@@ -8,37 +8,48 @@
 		type: 'input' | 'output';
 		text: string;
 	}
-	let input = '';
+	const finalCode = 'finalcode';
+	let input: string = '';
 	let output: TerminalOutput[] = [];
 	let userInput: HTMLInputElement;
-	let codeAttempt = 3;
-	let isFinalInput = false;
-	let cur_ip = ""
+	let codeAttempt: number = 3;
+	let isFinalInput: boolean = false;
+	let cur_ip: string = '';
+	let prev_input: string = '';
+
+	let introScreen: boolean = true;
 
 	const handleInput = () => {
 		const command = input.trim().toLowerCase();
 		output = [...output, { type: 'input', text: input }];
 
-		if (command === 'yes' && isFinalInput == false) {
-			simulateTyping('\nEnter final code:');
-			isFinalInput = true;
-			startTimer.set(true);
-		} else if (command === 'finalcode' && isFinalInput == true) {
-			finalCodeSuccess();
-		} else if (isFinalInput == true) {
-			codeAttempt--;
-			if (codeAttempt <= 0) {
-				finalCodeFail();
-			} else {
-				if (codeAttempt == 1) {
-					simulateTyping(`Wrong. You have ${codeAttempt} chance left.`);
-				}
-				else {
-					simulateTyping(`Wrong. You have ${codeAttempt} chances left.`);
-				}
-			}
-		} else {
+		if (introScreen) {
 			simulateTyping(`Command not recognized: ${input}`);
+		}
+		else if (isFinalInput && command === "yes" || command == "y") {
+			if (prev_input !== finalCode) {
+				codeAttempt--;
+				if (codeAttempt <= 0) {
+					finalCodeFail();
+				} else {
+					if (codeAttempt == 1) {
+						simulateTyping(`Wrong. You have ${codeAttempt} chance left. \nEnter Final Code: \n`);
+					} else {
+						simulateTyping(`Wrong. You have ${codeAttempt} chances left. \nEnter Final Code: \n`);
+					}
+					isFinalInput = false;
+				}
+			} else {
+				finalCodeSuccess();
+			}
+		} 
+		else if (isFinalInput) {
+			isFinalInput = false;
+			simulateTyping(`Enter Final Code: \n`);
+		} else if (!isFinalInput) {
+			prev_input = command;
+			simulateTyping(`Are you sure? [y/n]`);
+			isFinalInput = true;
 		}
 
 		input = '';
@@ -49,7 +60,7 @@
 		const characters = text.split('');
 
 		let curOutput = output;
-		for (let index = 0; index < characters.length; index++) {
+		for (let index = 0; index <= characters.length; index++) {
 			await new Promise((resolve) => setTimeout(resolve, speed));
 			output = [...curOutput, { type: 'output', text: text.slice(0, index + 1) }];
 		}
@@ -59,18 +70,19 @@
 
 	const finalCodeSuccess = () => {};
 	const finalCodeFail = async () => {
-		await simulateTyping('Website shutting down in 3...2...1');
-		console.log("Banned ip: ", cur_ip)
-		await addDoc(collection(db, 'ips'), {
-			ip: cur_ip
-		});
+		await simulateTyping("Time's up.\nWebsite shutting down in 3...2...1");
+		console.log('Banned ip: ', cur_ip);
+		// await addDoc(collection(db, 'ips'), {
+		// 	ip: cur_ip
+		// });
+		await new Promise((r) => setTimeout(r, 1000));
 		goto('/blank');
 		startTimer.set(false);
 		timeOut.set(false);
 	};
 	const track_ip = ip.subscribe((value) => {
-		cur_ip = value
-	})
+		cur_ip = value;
+	});
 
 	const unsubscribe = timeOut.subscribe((newValue) => {
 		if (newValue) {
@@ -79,20 +91,24 @@
 	});
 
 	const focusInput = (el: HTMLInputElement) => {
-		el.focus();
+		el !== undefined && el.focus();
 	};
 
 	const unfocusInput = (el: HTMLInputElement) => {
-		el.blur();
+		el !== undefined && el.blur();
 	};
 
-	onMount(() => {
-		simulateTyping(`Welcome to the final stage.
+	onMount(async () => {
+		await simulateTyping(`Welcome to the final stage.
 You will be given three chances to input the Final Code.
 If you fail to crack the Final Code in 5 minutes, the website will shut down and you will not be able to restore the database.
-Good luck.
 
-If you wish to proceed type in "yes"`);
+Good luck.`);
+		await new Promise((r) => setTimeout(r, 5000));
+		startTimer.set(true);
+		output = [];
+		introScreen = false;
+		await simulateTyping(`Enter Final Code: \n`);
 	});
 
 	onDestroy(() => {
@@ -101,6 +117,12 @@ If you wish to proceed type in "yes"`);
 	});
 </script>
 
+{#if !introScreen}
+	<div id="hex-text">
+		02 6 6F 77 20 6D 61 6E 79 20 66 61 63 74 6F 72 73 20 64 6F 65 73 20 74 68 65 20 6E 75 6D 62 65
+		72 20 31 36 38 30 20 68 61 76 65 3F 03 74 68 65 20 61 6E 73 77 65 72 20 69 73 20 35 2E
+	</div>
+{/if}
 <div class="terminal">
 	{#each output as { type, text }}
 		{#if type === 'input'}
@@ -125,6 +147,7 @@ If you wish to proceed type in "yes"`);
 		font-family: 'Courier New', Courier, monospace;
 		color: #fbfbfb;
 		font-size: 1em;
+		margin-right: 5em;
 	}
 
 	.input,
@@ -142,5 +165,12 @@ If you wish to proceed type in "yes"`);
 		border: none;
 		outline: none;
 		color: #fbfbfb;
+	}
+
+	#hex-text {
+		font-size: 1.5rem;
+		filter: drop-shadow(0 1px 3px);
+		text-shadow: 1px 0px 1px #04d9ff;
+		margin-right: 5em;
 	}
 </style>

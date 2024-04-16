@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import { startTimer, timeOut } from '$lib/store';
 
-	let totalSeconds = 10; // 5 minutes
+	let totalSeconds = 600; // 10 minutes
 	let minutes = Math.floor(totalSeconds / 60);
 	let seconds = totalSeconds % 60;
 	let timer: number | ReturnType<typeof  setInterval>;

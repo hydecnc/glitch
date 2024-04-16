@@ -4,13 +4,12 @@
 	import { ip } from '$lib/store.js';
 
 	export let data;
-	// console.log(data.bannedIps);
 
 	ip.set(data.ip);
 </script>
 
 <div>
-	<h1>Final Code</h1>
+	<!-- <h1>Final Code</h1> -->
 	<Timer />
 	<Terminal />
 </div>
