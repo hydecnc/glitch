@@ -172,5 +172,6 @@ Good luck.`);
 		filter: drop-shadow(0 1px 3px);
 		text-shadow: 1px 0px 1px #04d9ff;
 		margin-right: 5em;
+		margin-bottom: 3em;
 	}
 </style>

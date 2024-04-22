@@ -61,7 +61,7 @@
 		</ul>
 	</div>
 	<div class="desc-block desc-text">
-		<div class="desc-text block-desc">
+		<div class="block-desc">
 			* No advanced mathematics will be required for the event. Any high school student can have
 			success in the event. The following topics may appear during the event:
 		</div>
@@ -82,6 +82,11 @@
 		font-size: 6rem;
 		margin-top: 0;
 		margin-bottom: 0;
+	}
+
+	strong {
+		color: rgb(var(--primary-color));
+		font-weight: bolder;
 	}
 
 	button {
@@ -158,14 +163,34 @@
 		align-items: center;
 		flex-direction: column;
 		gap: 1em;
+		animation: content-fade-in 4.0s ease forwards;
+	}
+
+	@keyframes content-fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	.desc-block {
 		display: flex;
 	}
 
+	@media (max-width: 600px) {
+		.desc-block {
+			flex-direction: column;
+		}
+	}
+
 	.block-desc {
-		max-width: 40%;
+		flex: 1;
+		font-size: 0.9rem;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-bottom: 1em;
 	}
 
 	.desc-text {
