@@ -6,6 +6,7 @@
 	const year = date.getFullYear();
 	const month = date.getMonth();
 	const day = date.getDate();
+	let animationRunning = true;
 
 	const normalDate = `${year}.${String(month + 1).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
 	let binaryDate = `${year.toString(2)}.${(month + 1).toString(2)}.${day.toString(2)}`;
@@ -19,29 +20,29 @@
 		} else {
 			dateString = normalDate;
 		}
+		animationRunning = false;
 	};
 </script>
 
 <Canvas />
 <div id="glitch">
 	<div id="glitch-lines" class="glitch-filter"></div>
-	<!-- <div id="glitch-shadow" class="glitch-filter"></div> -->
 
 	<h2 class="glitch-text" id="glitch-by">Presented by THOTH</h2>
-	<h1 class="glitch-text">The Glitch</h1>
-	<button class="glitch-text" on:click={toggleBinaryDate}>{dateString}</button>
+	<h1 class="glitch-text">The GLITCH</h1>
+	<button class="glitch-text glitch-date {animationRunning ? '' : 'paused'}" on:click={toggleBinaryDate}>{dateString}</button>
 </div>
 
 <div id="content">
-	<a href="https://forms.gle/N9hRDH8nnXHKsRfu6">
+	<a href="https://forms.gle/N9hRDH8nnXHKsRfu6" target="_blank">
 		<button type="button" id="register">Click here to register!</button>
 	</a>
-	<div class="desc-text">
+	<div class="desc-text" id="main-desc">
 		The THOTH database has been hacked by an unknown hacker group. They have put the THOTH database,
 		which contains all problems the THOTH club has ever solved, at a risk of deletion. They must be
 		stopped at all cost. Whoever solves the situtation most deligently will be awarded 
-		<strong>3000 pesos</strong>
-		by the THOTH club. You have been called to save the database from the glitchers and save the
+		<strong>$3000 MXN</strong>
+		by the THOTH club. You have been called to save the database from the hackers and save the
 		THOTH database.
 		<br />
 		<br />
@@ -49,7 +50,7 @@
 		<strong>Final Code</strong> required to stop the glitchers.
 	</div>
 	<div class="desc-text">
-		<h2 id="station-title">Rules</h2>
+		<h2 id="station-title">Instructions</h2>
 		<ul>
 			<li>Only ONE registration team must be submitted per team.</li>
 			<li>You can participate as an individual or in a team of maximum 3 people.</li>
@@ -59,20 +60,9 @@
 			</li>
 			<li>The registration will close on May 10th 11:59 p.m.</li>
 		</ul>
-	</div>
-	<div class="desc-block desc-text">
 		<div class="block-desc">
 			* No advanced mathematics will be required for the event. Any high school student can have
-			success in the event. The following topics may appear during the event:
-		</div>
-		<div>
-			<h2 id="station-title">Topics</h2>
-			<ol>
-				<li>Ascii, Binary, Hex</li>
-				<li>Basic Operations (+, −, ×, ÷)</li>
-				<li>Advanced Operations (exponents, logarithms, √, !)</li>
-				<li>Spatial Perception</li>
-			</ol>
+			success in the event. 
 		</div>
 	</div>
 </div>
@@ -139,10 +129,32 @@
 		pointer-events: none;
 	}
 
-	/* #glitch-shadow {
-		background: radial-gradient(rgb(var(--theme-rgb) / 1%) 20%, rgb(var(--darker-rgb) / 80%) 70%);
-		z-index: 3;
-	} */
+	.glitch-date {
+		font-size: 1.4em;
+		animation: blink 1.0s linear infinite;
+	}
+
+	@keyframes blink {
+		0% {
+			opacity: 1.0;
+		}
+		50% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 1.0;
+		}
+	}
+
+	.paused {
+		animation: none;
+		/* animation-play-state: paused; */
+		opacity: 1.0;
+	}
+
+	#main-desc {
+		font-size: 1.2em;
+	}
 
 	#glitch-lines {
 		background: linear-gradient(
@@ -163,28 +175,18 @@
 		align-items: center;
 		flex-direction: column;
 		gap: 1em;
-		animation: content-fade-in 4.0s ease forwards;
+		animation: content-fade-in 3.0s ease forwards;
 	}
 
 	@keyframes content-fade-in {
-		from {
-			opacity: 0;
+		0% {
+			transform: translateX(-100%);
 		}
 		to {
-			opacity: 1;
+			transform: translateX(0%);
 		}
 	}
-
-	.desc-block {
-		display: flex;
-	}
-
-	@media (max-width: 600px) {
-		.desc-block {
-			flex-direction: column;
-		}
-	}
-
+	
 	.block-desc {
 		flex: 1;
 		font-size: 0.9rem;
@@ -192,18 +194,20 @@
 		padding-right: 10px;
 		margin-bottom: 1em;
 	}
-
+	
 	.desc-text {
 		padding: 1rem;
-		font-family: 'Courier New', Courier, monospace;
+		/* font-family: 'Courier New', Courier, monospace; */
 		backdrop-filter: blur(10px);
 		/* padding: 5px; */
 		border-radius: 20px;
 		font-size: 1.1em;
+		margin-left: 20px;
+		margin-right: 20px;
 	}
 
 	#station-title {
-		font-size: 3rem;
+		font-size: 2rem;
 		padding: 0;
 		margin: 0;
 	}
