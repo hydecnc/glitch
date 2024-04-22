@@ -68,6 +68,9 @@
 </div>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
 	h1 {
 		font-size: 6rem;
 		margin-top: 0;
@@ -119,7 +122,7 @@
 		background-size: 100% 7px;
 		text-align: center;
 	}
-
+	
 	.glitch-filter {
 		height: 100%;
 		width: 100%;
@@ -128,12 +131,12 @@
 		top: 0%;
 		pointer-events: none;
 	}
-
+	
 	.glitch-date {
 		font-size: 1.4em;
 		animation: blink 1.0s linear infinite;
 	}
-
+	
 	@keyframes blink {
 		0% {
 			opacity: 1.0;
@@ -145,13 +148,13 @@
 			opacity: 1.0;
 		}
 	}
-
+	
 	.paused {
 		animation: none;
 		/* animation-play-state: paused; */
 		opacity: 1.0;
 	}
-
+	
 	#main-desc {
 		font-size: 1.2em;
 	}
@@ -163,19 +166,19 @@
 			rgb(var(--darker-rgb) / 15%) 56%,
 			rgb(var(--darker-rgb) / 5%) 56%,
 			rgb(var(--darker-rgb) / 5%) 100%
-		);
-		background-size: 100% 7px;
-		z-index: 5;
-		opacity: 0.75;
-		animation: pan-lines 360s infinite linear;
-	}
-
-	#content {
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		gap: 1em;
-		animation: content-fade-in 3.0s ease forwards;
+			);
+			background-size: 100% 7px;
+			z-index: 5;
+			opacity: 0.75;
+			animation: pan-lines 360s infinite linear;
+		}
+		
+		#content {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			gap: 1em;
+			animation: content-fade-in 3.0s ease forwards;
 	}
 
 	@keyframes content-fade-in {
@@ -198,12 +201,14 @@
 	.desc-text {
 		padding: 1rem;
 		/* font-family: 'Courier New', Courier, monospace; */
+		font-family: 'Open Sans';
 		backdrop-filter: blur(10px);
 		/* padding: 5px; */
 		border-radius: 20px;
 		font-size: 1.1em;
 		margin-left: 20px;
 		margin-right: 20px;
+		width: 80%;
 	}
 
 	#station-title {
@@ -219,6 +224,7 @@
 		padding: 1em;
 		backdrop-filter: blur(10px);
 		border-radius: 20px;
+		margin-bottom: 1.5em;
 		/* background-color: rgb(var(--darker-rgb)); */
 	}
 </style>
