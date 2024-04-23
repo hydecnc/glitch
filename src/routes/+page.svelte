@@ -64,7 +64,7 @@
 				Only <strong>ASFM high school students</strong> can participate, but you may have different grade
 				levels in one team.
 			</li>
-			<li>The registration will <strong>close on May 10th</strong> 11:59 p.m.</li>
+			<li>The registration will <strong>close on May 5th</strong> 11:59 p.m.</li>
 		</ul>
 		<div class="block-desc">
 			* No advanced mathematics will be required for the event. Any high school student can have

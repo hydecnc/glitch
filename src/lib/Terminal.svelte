@@ -17,16 +17,20 @@
 	let cur_ip: string = '';
 	let prev_input: string = '';
 
-	let introScreen: boolean = true;
+	let introScreen = true;
 
 	const handleInput = () => {
 		const command = input.trim().toLowerCase();
 		output = [...output, { type: 'input', text: input }];
 
-		if (introScreen) {
+		if (introScreen && (command === "yes" || command === "y")) {
+			introScreen = false;
+			finalCodeStart();
+		}
+		else if (introScreen) {
 			simulateTyping(`Command not recognized: ${input}`);
 		}
-		else if (isFinalInput && command === "yes" || command == "y") {
+		else if (isFinalInput && command === "yes" || command === "y") {
 			if (prev_input !== finalCode) {
 				codeAttempt--;
 				if (codeAttempt <= 0) {
@@ -51,64 +55,70 @@
 			simulateTyping(`Are you sure? [y/n]`);
 			isFinalInput = true;
 		}
-
+		
 		input = '';
 	};
-
+	
 	const simulateTyping = async (text: string, speed: number = 50) => {
 		unfocusInput(userInput);
 		const characters = text.split('');
-
+		
 		let curOutput = output;
 		for (let index = 0; index <= characters.length; index++) {
 			await new Promise((resolve) => setTimeout(resolve, speed));
 			output = [...curOutput, { type: 'output', text: text.slice(0, index + 1) }];
 		}
-
+		
 		focusInput(userInput);
 	};
-
+	
 	const finalCodeSuccess = () => {};
 	const finalCodeFail = async () => {
 		await simulateTyping("Time's up.\nWebsite shutting down in 3...2...1");
 		console.log('Banned ip: ', cur_ip);
-		// await addDoc(collection(db, 'ips'), {
-		// 	ip: cur_ip
-		// });
-		await new Promise((r) => setTimeout(r, 1000));
-		goto('/blank');
-		startTimer.set(false);
-		timeOut.set(false);
-	};
-	const track_ip = ip.subscribe((value) => {
-		cur_ip = value;
-	});
-
-	const unsubscribe = timeOut.subscribe((newValue) => {
-		if (newValue) {
-			finalCodeFail();
-		}
-	});
-
-	const focusInput = (el: HTMLInputElement) => {
-		el !== undefined && el.focus();
-	};
-
-	const unfocusInput = (el: HTMLInputElement) => {
-		el !== undefined && el.blur();
-	};
+			// await addDoc(collection(db, 'ips'), {
+			// 	ip: cur_ip
+			// });
+			await new Promise((r) => setTimeout(r, 1000));
+			goto('/blank');
+			startTimer.set(false);
+			timeOut.set(false);
+		};
+		const track_ip = ip.subscribe((value) => {
+			cur_ip = value;
+		});
+		
+		const unsubscribe = timeOut.subscribe((newValue) => {
+			if (newValue) {
+				finalCodeFail();
+			}
+		});
+		
+		const focusInput = (el: HTMLInputElement) => {
+			el !== undefined && el.focus();
+		};
+		
+		const unfocusInput = (el: HTMLInputElement) => {
+			el !== undefined && el.blur();
+		};
+		
+		const finalCodeStart = async () => {
+			simulateTyping(`Good Luck. \n`);
+			await simulateTyping(`\n
+			02 6 6F 77 20 6D 61 6E 79 20 66 61 63 74 6F 72 73 20 64 6F 65 73 20 74 68 65 20 6E 75 6D 62
+			65 72 20 31 36 38 30 20 68 61 76 65 3F 03 74 68 65 20 61 6E 73 77 65 72 20 69 73 20 35 2E 
+			\n\n`);
+		await simulateTyping(`Enter Final Code: \n`);
+	}
 
 	onMount(async () => {
 		await simulateTyping(`Welcome to the final stage.
 You will be given three chances to input the Final Code.
 If you fail to crack the Final Code in 5 minutes, the website will shut down and you will not be able to restore the database.
 
-Good luck.`);
+Would you like to proceed? [y/n]`);
 		await new Promise((r) => setTimeout(r, 5000));
 		startTimer.set(true);
-		output = [];
-		introScreen = false;
-		await simulateTyping(`Enter Final Code: \n`);
 	});
 
 	onDestroy(() => {
@@ -117,12 +127,6 @@ Good luck.`);
 	});
 </script>
 
-{#if !introScreen}
-	<div id="hex-text">
-		02 6 6F 77 20 6D 61 6E 79 20 66 61 63 74 6F 72 73 20 64 6F 65 73 20 74 68 65 20 6E 75 6D 62 65
-		72 20 31 36 38 30 20 68 61 76 65 3F 03 74 68 65 20 61 6E 73 77 65 72 20 69 73 20 35 2E
-	</div>
-{/if}
 <div class="terminal">
 	{#each output as { type, text }}
 		{#if type === 'input'}
@@ -142,7 +146,6 @@ Good luck.`);
 </div>
 
 <style>
-	/* Add your custom styles for the terminal here */
 	.terminal {
 		font-family: 'Courier New', Courier, monospace;
 		color: #fbfbfb;
@@ -167,11 +170,11 @@ Good luck.`);
 		color: #fbfbfb;
 	}
 
-	#hex-text {
+	/* #hex-text {
 		font-size: 1.5rem;
 		filter: drop-shadow(0 1px 3px);
 		text-shadow: 1px 0px 1px #04d9ff;
 		margin-right: 5em;
 		margin-bottom: 3em;
-	}
+	} */
 </style>

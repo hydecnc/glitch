@@ -10,7 +10,7 @@
 
 <div>
 	<!-- <h1>Final Code</h1> -->
-	<Timer />
+	<!-- <Timer /> -->
 	<Terminal />
 </div>
 
