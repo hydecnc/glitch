@@ -58,7 +58,7 @@
 			<li><strong>Only ONE</strong> registration form must be submitted per team.</li>
 			<li>
 				You can participate as <strong>an individual</strong> or in
-				<stronog>a team of maximum 3 people</stronog>.
+				<strong>a team of maximum 3 people</strong>.
 			</li>
 			<li>
 				Only <strong>ASFM high school students</strong> can participate, but you may have different grade
