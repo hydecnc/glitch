@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Canvas from '$lib/Canvas.svelte';
+	import GlitchedCanvas from '$lib/GlitchedCanvas.svelte';
 
 	const date = new Date('2024-05-20T12:00:00');
 	let binary = true;
@@ -24,7 +24,7 @@
 	};
 </script>
 
-<Canvas />
+<GlitchedCanvas />
 <div id="glitch">
 	<div id="glitch-lines" class="glitch-filter"></div>
 
@@ -44,7 +44,7 @@
 		The THOTH database has been hacked by an unknown hacker group. They have put the THOTH database,
 		which contains all problems the THOTH club has ever solved, at a risk of deletion. They must be
 		stopped at all cost. Whoever solves the situation most deligently will be awarded
-		<strong>$3000 MXN</strong>
+		<strong>$3000 MXN in Amazon Gift Cards</strong>
 		by the THOTH club. You have been called to save the database from the hackers and save the THOTH
 		database.
 		<br />
