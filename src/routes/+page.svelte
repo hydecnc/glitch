@@ -17,7 +17,7 @@
 		binary = !binary;
 		if (binary) {
 			dateString = binaryDate;
-		} else {
+		} else { 
 			dateString = normalDate;
 		}
 		animationRunning = false;
