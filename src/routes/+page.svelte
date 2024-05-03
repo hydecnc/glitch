@@ -79,7 +79,7 @@
 			>
 				<strong> @th0th_asfm </strong>
 			</a>
-			or <a class="contact" href="mailto:24yoo9560@asfm.mx"><strong>24yoo9560@asfm.mx</strong></a>
+			or <a class="contact" href="mailto:thoth.asfmclub@gmail.com"><strong>thoth.asfmclub@gmail.com</strong></a>
 		</div>
 	</div>
 </div>
