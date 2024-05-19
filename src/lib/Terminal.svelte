@@ -8,7 +8,7 @@
 		type: 'input' | 'output';
 		text: string;
 	}
-	const finalCode = 'finalcode';
+	const finalCode = 'wrong';
 	let input: string = '';
 	let output: TerminalOutput[] = [];
 	let userInput: HTMLInputElement;
@@ -72,9 +72,12 @@
 		focusInput(userInput);
 	};
 	
-	const finalCodeSuccess = () => {};
+	const finalCodeSuccess = async () => {
+		await simulateTyping("Final Code authorized. Restoring database in 3...2...1...")
+		goto('./success')
+	};
 	const finalCodeFail = async () => {
-		await simulateTyping("Time's up.\nWebsite shutting down in 3...2...1");
+		await simulateTyping("Time's up.\nWebsite shutting down in 3...2...1...");
 		console.log('Banned ip: ', cur_ip);
 			// await addDoc(collection(db, 'ips'), {
 			// 	ip: cur_ip
@@ -103,22 +106,33 @@
 		};
 		
 		const finalCodeStart = async () => {
-			simulateTyping(`Good Luck. \n`);
-			await simulateTyping(`\n
-			02 6 6F 77 20 6D 61 6E 79 20 66 61 63 74 6F 72 73 20 64 6F 65 73 20 74 68 65 20 6E 75 6D 62
-			65 72 20 31 36 38 30 20 68 61 76 65 3F 03 74 68 65 20 61 6E 73 77 65 72 20 69 73 20 35 2E 
-			\n\n`);
+			await simulateTyping(`\nGood Luck. \n`);
+			let finalProblem = "What is the 5-letter word that all smart people spell wrong?";
+			const stringToHex = (str: string) => {
+				let hex: string = '';
+				for (let i=0; i<str.length; i++ ) {
+					let charHex = str.charCodeAt(i).toString(16);
+
+					if (charHex.length < 2) {
+						charHex = '0' + charHex;
+					}
+					hex += charHex + ' ';
+				}
+				return hex;
+			}
+			finalProblem = stringToHex(finalProblem);
+			await simulateTyping(`\n${finalProblem}\n\n`);
 		await simulateTyping(`Enter Final Code: \n`);
 	}
 
 	onMount(async () => {
 		await simulateTyping(`Welcome to the final stage.
 You will be given three chances to input the Final Code.
-If you fail to crack the Final Code in 5 minutes, the website will shut down and you will not be able to restore the database.
+If you fail to crack the Final Code, the website will shut down and you will not be able to restore the database.
 
 Would you like to proceed? [y/n]`);
-		await new Promise((r) => setTimeout(r, 5000));
-		startTimer.set(true);
+		// await new Promise((r) => setTimeout(r, 5000));
+		// startTimer.set(true);
 	});
 
 	onDestroy(() => {

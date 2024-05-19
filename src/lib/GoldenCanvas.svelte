@@ -7,7 +7,8 @@
 	let cursor = { x: 0, y: 0 };
 
 	const backgroundColor = '#d4af37';
-	const fontSize = 14;
+	// const backgroundColor = '#ff0000';
+	const fontSize = 30;
 	const math_symbols = [
 		'∑',
 		'∫',
@@ -63,14 +64,14 @@
 		return math_symbols[Math.floor(Math.random() * math_symbols.length)];
 	};
 
-	function addParticle() {
-		particles.push(new Particle(cursor.x, cursor.y, getRandomChar(), 100));
+	function addParticle(x: number, y: number) {
+		particles.push(new Particle(x, y, getRandomChar(), 100));
 	}
 
 	function onMouseMove(e: MouseEvent) {
 		cursor.x = e.clientX;
 		cursor.y = e.clientY;
-		addParticle();
+		// addParticle();
 	}
 
 	
@@ -80,11 +81,12 @@
 		if (ctx) {
 			let width = window.innerWidth;
 			let height = window.innerHeight;
+			let numSymbols = 1;
 			
 			canvas.width = width;
 			canvas.height = height;
 			ctx.fillStyle = backgroundColor;
-			ctx.font = `bold ${fontSize}px Arial`	
+			ctx.font = `bold ${fontSize}px Arial`;
 			
 			function updateParticles() {
 				if (particles.length == 0) {
@@ -112,6 +114,9 @@
 			};
 			
 			const draw = () => {
+				for (let i = 0; i<numSymbols; i++) {
+					addParticle(Math.random() * width, Math.random() * height);
+				}
 				updateParticles();
 				ctx?.save();
 				window.requestAnimationFrame(draw);
@@ -136,6 +141,6 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		z-index: 11;
+		z-index: -1;
 	}
 </style>
