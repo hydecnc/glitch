@@ -10,7 +10,7 @@
 <div class="main-container" in:fade={{duration: 300, delay: 400}}>
 	<div id="blur">
 		<h1 id="congrats">Congratulations! You have cracked the Final Code!</h1>
-		<h2 id="extra-info">Report to a THθTH station manager</h2>
+		<h2 id="extra-info">Report to a nearby THθTH staff</h2>
 		<h2> THθTH (Mathematics & Logics Club)</h2>
 	</div>
 </div>

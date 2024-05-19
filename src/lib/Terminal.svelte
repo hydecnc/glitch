@@ -23,31 +23,28 @@
 		const command = input.trim().toLowerCase();
 		output = [...output, { type: 'input', text: input }];
 
-		if (introScreen && (command === "yes" || command === "y")) {
+		if (introScreen && (command === 'yes' || command === 'y')) {
 			introScreen = false;
 			finalCodeStart();
-		}
-		else if (introScreen) {
+		} else if (introScreen) {
 			simulateTyping(`Command not recognized: ${input}`);
-		}
-		else if (isFinalInput && command === "yes" || command === "y") {
+		} else if ((isFinalInput && command === 'yes') || (isFinalInput && command === 'y')) {
 			if (prev_input !== finalCode) {
 				codeAttempt--;
 				if (codeAttempt <= 0) {
 					finalCodeFail();
 				} else {
 					if (codeAttempt == 1) {
-						simulateTyping(`Wrong. You have ${codeAttempt} chance left. \nEnter Final Code: \n`);
+						simulateTyping(`Wrong. You have ${codeAttempt} chance left. \n\nEnter Final Code: \n`);
 					} else {
-						simulateTyping(`Wrong. You have ${codeAttempt} chances left. \nEnter Final Code: \n`);
+						simulateTyping(`Wrong. You have ${codeAttempt} chances left. \n\nEnter Final Code: \n`);
 					}
 					isFinalInput = false;
 				}
 			} else {
 				finalCodeSuccess();
 			}
-		} 
-		else if (isFinalInput) {
+		} else if (isFinalInput) {
 			isFinalInput = false;
 			simulateTyping(`Enter Final Code: \n`);
 		} else if (!isFinalInput) {
@@ -55,75 +52,75 @@
 			simulateTyping(`Are you sure? [y/n]`);
 			isFinalInput = true;
 		}
-		
+
 		input = '';
 	};
-	
+
 	const simulateTyping = async (text: string, speed: number = 50) => {
 		unfocusInput(userInput);
 		const characters = text.split('');
-		
+
 		let curOutput = output;
 		for (let index = 0; index <= characters.length; index++) {
 			await new Promise((resolve) => setTimeout(resolve, speed));
 			output = [...curOutput, { type: 'output', text: text.slice(0, index + 1) }];
 		}
-		
+
 		focusInput(userInput);
 	};
-	
+
 	const finalCodeSuccess = async () => {
-		await simulateTyping("Final Code authorized. Restoring database in 3...2...1...")
-		goto('./success')
+		await simulateTyping('Final Code authorized. Restoring database in 3...2...1...');
+		goto('./success');
 	};
 	const finalCodeFail = async () => {
-		await simulateTyping("Time's up.\nWebsite shutting down in 3...2...1...");
+		await simulateTyping("You have lost all your chacnes.\nWebsite shutting down in 3...2...1...");
 		console.log('Banned ip: ', cur_ip);
-			// await addDoc(collection(db, 'ips'), {
-			// 	ip: cur_ip
-			// });
-			await new Promise((r) => setTimeout(r, 1000));
-			goto('/blank');
-			startTimer.set(false);
-			timeOut.set(false);
-		};
-		const track_ip = ip.subscribe((value) => {
-			cur_ip = value;
-		});
-		
-		const unsubscribe = timeOut.subscribe((newValue) => {
-			if (newValue) {
-				finalCodeFail();
-			}
-		});
-		
-		const focusInput = (el: HTMLInputElement) => {
-			el !== undefined && el.focus();
-		};
-		
-		const unfocusInput = (el: HTMLInputElement) => {
-			el !== undefined && el.blur();
-		};
-		
-		const finalCodeStart = async () => {
-			await simulateTyping(`\nGood Luck. \n`);
-			let finalProblem = "What is the 5-letter word that all smart people spell wrong?";
-			const stringToHex = (str: string) => {
-				let hex: string = '';
-				for (let i=0; i<str.length; i++ ) {
-					let charHex = str.charCodeAt(i).toString(16);
+		// await addDoc(collection(db, 'ips'), {
+		// 	ip: cur_ip
+		// });
+		await new Promise((r) => setTimeout(r, 3000));
+		goto('/blank');
+		startTimer.set(false);
+		timeOut.set(false);
+	};
+	const track_ip = ip.subscribe((value) => {
+		cur_ip = value;
+	});
 
-					if (charHex.length < 2) {
-						charHex = '0' + charHex;
-					}
-					hex += charHex + ' ';
+	const unsubscribe = timeOut.subscribe((newValue) => {
+		if (newValue) {
+			finalCodeFail();
+		}
+	});
+
+	const focusInput = (el: HTMLInputElement) => {
+		el !== undefined && el.focus();
+	};
+
+	const unfocusInput = (el: HTMLInputElement) => {
+		el !== undefined && el.blur();
+	};
+
+	const finalCodeStart = async () => {
+		await simulateTyping(`\nGood Luck. \n`);
+		let finalProblem = 'What is the 5-letter word that all smart people spell wrong?';
+		const stringToHex = (str: string) => {
+			let hex: string = '';
+			for (let i = 0; i < str.length; i++) {
+				let charHex = str.charCodeAt(i).toString(16);
+
+				if (charHex.length < 2) {
+					charHex = '0' + charHex;
 				}
-				return hex;
+				hex += charHex + ' ';
 			}
-			finalProblem = stringToHex(finalProblem);
-			await simulateTyping(`\n${finalProblem}\n\n`);
+			return hex;
+		};
+		finalProblem = stringToHex(finalProblem);
+		await simulateTyping(`\n${finalProblem}\n\n`);
 		await simulateTyping(`Enter Final Code: \n`);
-	}
+	};
 
 	onMount(async () => {
 		await simulateTyping(`Welcome to the final stage.
