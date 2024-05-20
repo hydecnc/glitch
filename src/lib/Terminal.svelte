@@ -76,9 +76,9 @@
 	const finalCodeFail = async () => {
 		await simulateTyping("You have lost all your chacnes.\nWebsite shutting down in 3...2...1...");
 		console.log('Banned ip: ', cur_ip);
-		await addDoc(collection(db, 'ips'), {
-			ip: cur_ip
-		});
+		// await addDoc(collection(db, 'ips'), {
+		// 	ip: cur_ip
+		// });
 		await new Promise((r) => setTimeout(r, 3000));
 		goto('/blank');
 		startTimer.set(false);
